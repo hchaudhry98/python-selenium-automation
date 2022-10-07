@@ -1,0 +1,15 @@
+"""
+
+amazon logo, by CSS_SELECTOR, ".a-icon-logo"
+Create Account label, by XPATH, "//h1"
+Your Name input field, by ID, "ap_customer_name"
+Email input field, by ID, "ap_email"
+Password input field, by ID, "ap_password"
+Password requirement alert, by XPATH, "//div[contains(text(), 'at least 6')]"
+Re-enter password input field, By ID, "ap_password_check"
+Continue button, by ID, "continue"
+Conditions of Use link, search by XPATH, "//a[text()='Conditions of Use']"
+Privacy Notice Link, search by XPATH, "//a[text()='Privacy Notice']"
+Sign in link, By CSS_SELECTOR, ".a-link-emphasis"
+
+"""
