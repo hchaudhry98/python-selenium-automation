@@ -32,6 +32,16 @@ def click_sign_in(context):
     e.click()
 
 
+@when('Wait for {sec} seconds')
+def wait_sec(context, sec):
+    sleep(int(sec))
+
+
+@then('Verify Sign In disappears')
+def verify_sign_in_btn_disappears(context):
+    context.driver.wait.until(EC.invisibility_of_element_located(SIGN_IN), message='Sign in is still visible')
+
+
 @then('Search results for {product_result} are shown')
 def verify_search_results(context, product_result):
     actual_result = context.driver.find_element(By.XPATH, "//span[@class='a-color-state a-text-bold']").text
@@ -81,3 +91,7 @@ def verify_links(context):
     links = context.driver.find_elements(*LINKS)
     assert len(links) == 5, 'Expected 5 links'
 
+
+@then('Verify Sign In is clickable')
+def verify_sign_in_clickable(context):
+    context.driver.wait.until(EC.element_to_be_clickable(SIGN_IN), message='Sign in not clickable')
