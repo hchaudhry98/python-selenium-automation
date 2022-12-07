@@ -2,12 +2,16 @@ from time import sleep
 
 from selenium.webdriver.common.by import By
 from behave import given, when, then
+from selenium.webdriver.support import expected_conditions as EC
+
 
 CART = (By.ID, "nav-cart-count")
 PRODUCT_PRICE = (By.XPATH, "//div[@data-component-type='s-search-result']//a[.//span[@class='a-price-whole']]")
 LINKS = (By.CSS_SELECTOR, "div[class*='nav-tab-all_style'] a")
 HAM_MENU = (By.ID, "nav-hamburger-menu")
 FOOTER_LINKS = (By.CSS_SELECTOR, ".navFooterDescItem a")
+SIGN_IN = (By.CSS_SELECTOR, "#nav-signin-tooltip .nav-action-button")
+ADD_TO_CART_BTN = (By.ID, 'add-to-cart-button')
 
 @given('Open amazon page')
 def open_amazon(context):
@@ -22,6 +26,12 @@ def search_product(context, product):
     context.driver.find_element(By.ID, 'nav-search-submit-button').click()
 
 
+@when('Click on button from SignIn popup')
+def click_sign_in(context):
+    e = context.driver.wait.until(EC.element_to_be_clickable(SIGN_IN), message='Sign in not clickable')
+    e.click()
+
+
 @then('Search results for {product_result} are shown')
 def verify_search_results(context, product_result):
     actual_result = context.driver.find_element(By.XPATH, "//span[@class='a-color-state a-text-bold']").text
@@ -30,13 +40,14 @@ def verify_search_results(context, product_result):
 
 @when('Click on first product')
 def click_first_product(context):
-    context.driver.find_element(*PRODUCT_PRICE).click()
+    e = context.driver.wait.until(EC.element_to_be_clickable(PRODUCT_PRICE), message='Product not clickable')
+    e.click()
+
+
+@when('Click on Add to cart button')
+def click_add_to_cart(context):
+    context.driver.find_element(*ADD_TO_CART_BTN).click()
     sleep(2)
-
-
-@when('Click on Add to Cart button')
-def add_to_cart(context):
-    context.driver.find_element(By.ID, "add-to-cart-button").click()
 
 
 @then('Verify cart has {expected_count} item')
